@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal de Notícias · Neopolitan</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /*  Tokens */
+    :root {
+      --brand-red: #a53bc5;
+      --brand-dark: #1A1A2E;
+      --brand-mid: #594664;
+      --brand-gold: #e24a4a;
+      --text-muted: #6B7280;
+      --card-radius: 10px;
+    }
+
+    /* Base */
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F7F7F8;
+      color: #1A1A2E;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .display-font {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Navbar */
+    .navbar-neopolitan {
+      background: var(--brand-dark) !important;
+      border-bottom: 3px solid var(--brand-red);
+    }
+
+    .navbar-neopolitan .navbar-brand span {
+      color: var(--brand-red);
+    }
+
+    .navbar-neopolitan .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    .navbar-neopolitan .nav-link {
+      color: #CBD5E1 !important;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 0.9rem !important;
+      transition: color 0.2s;
+    }
+
+    .navbar-neopolitan .nav-link:hover,
+    .navbar-neopolitan .nav-link.active {
+      color: var(--brand-gold) !important;
+    }
+
+    .navbar-neopolitan .navbar-toggler {
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .navbar-neopolitan .navbar-toggler-icon {
+      filter: invert(1);
+    }
+
+    /* Breaking bar */
+    .breaking-bar {
+      background: var(--brand-red);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 6px 0;
+    }
+
+    .breaking-bar .label {
+      background: #e92525;
+      color: #ffffff;
+      padding: 2px 10px;
+      border-radius: 3px;
+      margin-right: 12px;
+      font-weight: 700;
+    }
+
+    /* Hero */
+    .hero-section {
+      position: relative;
+      min-height: 520px;
+      background:
+        linear-gradient(to right, rgba(26, 26, 46, 0.92) 55%, rgba(26, 26, 46, 0.55)),
+        url('https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1400&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-section .badge-category {
+      background: var(--brand-red);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 3px;
+    }
+
+    .hero-section h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: #fff;
+      line-height: 1.15;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .hero-section .lead {
+      color: #CBD5E1;
+      font-size: 1rem;
+    }
+
+    .hero-section .btn-hero {
+      background: var(--brand-gold);
+      color: var(--brand-dark);
+      font-weight: 600;
+      border: none;
+      padding: 0.6rem 1.6rem;
+      border-radius: 4px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .hero-section .btn-hero:hover {
+      background: #f0c060;
+      transform: translateY(-2px);
+    }
+
+    .hero-meta {
+      font-size: 0.8rem;
+      color: #94A3B8;
+    }
+
+    /* Section titles  */
+    .section-title {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-dark);
+      padding-bottom: 8px;
+      border-bottom: 3px solid var(--brand-red);
+      margin-bottom: 1.4rem;
+    }
+
+    /*  News Cards  */
+    .news-card {
+      border: none;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      transition: transform 0.22s, box-shadow 0.22s;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .news-card .card-img-top {
+      height: 190px;
+      object-fit: cover;
+    }
+
+    .news-card .card-body {
+      padding: 1rem 1.1rem;
+    }
+
+    .news-card .card-category {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-red);
+      margin-bottom: 0.35rem;
+    }
+
+    .news-card .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--brand-dark);
+    }
+
+    .news-card .card-text {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .news-card .card-footer {
+      background: transparent;
+      border-top: 1px solid #F0F0F2;
+      font-size: 0.75rem;
+      color: #9CA3AF;
+      padding: 0.6rem 1.1rem;
+    }
+
+    .btn-read {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--brand-red);
+      text-decoration: none;
+      border: 1.5px solid var(--brand-red);
+      border-radius: 4px;
+      padding: 3px 12px;
+      transition: all 0.18s;
+    }
+
+    .btn-read:hover {
+      background: var(--brand-red);
+      color: #fff;
+    }
+
+    /*  Sidebar  */
+    .sidebar-widget {
+      background: #fff;
+      border-radius: var(--card-radius);
+      padding: 1.4rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+      margin-bottom: 1.5rem;
+    }
+
+    .sidebar-widget .section-title {
+      font-size: 0.9rem;
+    }
+
+    .list-group-item-news {
+      border: none;
+      border-bottom: 1px solid #F0F0F2 !important;
+      padding: 0.7rem 0 !important;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      background: transparent !important;
+    }
+
+    .list-group-item-news:last-child {
+      border-bottom: none !important;
+    }
+
+    .list-group-item-news img {
+      width: 68px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .list-group-item-news .item-title {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--brand-dark);
+      line-height: 1.3;
+    }
+
+    .list-group-item-news .item-time {
+      font-size: 0.72rem;
+      color: #9CA3AF;
+      margin-top: 3px;
+    }
+
+    /*  Newsletter form in sidebar */
+    .newsletter-inline input {
+      border-radius: 6px 0 0 6px;
+      border: 1.5px solid #E5E7EB;
+      font-size: 0.875rem;
+    }
+
+    .newsletter-inline button {
+      border-radius: 0 6px 6px 0;
+      background: var(--brand-red);
+      border: none;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    /* Tags widget */
+    .tag-badge {
+      background: #F3F4F6;
+      color: #374151;
+      font-size: 0.75rem;
+      padding: 5px 11px;
+      border-radius: 99px;
+      text-decoration: none;
+      display: inline-block;
+      margin: 3px 2px;
+      transition: background 0.15s;
+    }
+
+    .tag-badge:hover {
+      background: var(--brand-red);
+      color: #fff;
+    }
+
+    /* Footer  */
+    .footer-dark {
+      background: var(--brand-dark) !important;
+      border-top: 3px solid var(--brand-red);
+    }
+
+    .footer-dark h6 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-gold);
+      margin-bottom: 1rem;
+    }
+
+    .footer-dark a {
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      display: block;
+      margin-bottom: 0.45rem;
+      transition: color 0.15s;
+    }
+
+    .footer-dark a:hover {
+      color: #fff;
+    }
+
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      color: #94A3B8 !important;
+      font-size: 1rem;
+      transition: background 0.15s, color 0.15s;
+      margin-right: 6px;
+      margin-bottom: 0 !important;
+    }
+
+    .footer-social a:hover {
+      background: var(--brand-red);
+      color: #fff !important;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.78rem;
+      color: #6B7280;
+    }
+
+    /* ─── Modal ───────────────────────────────────────── */
+    .modal-header {
+      background: var(--brand-dark);
+      border-bottom: 3px solid var(--brand-red);
+    }
+
+    .modal-header .modal-title {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+    }
+
+    .modal-header .btn-close {
+      filter: invert(1);
+    }
+
+    /* ─── Misc ────────────────────────────────────────── */
+    .weather-bar {
+      background: var(--brand-mid);
+      font-size: 0.78rem;
+      color: #94A3B8;
+      padding: 5px 0;
+    }
+
+    @media (max-width: 767px) {
+      .hero-section {
+        min-height: 380px;
+      }
+    }
+
+    @keyframes piscar {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    .breaking-bar .label {
+      animation: piscar 1s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP UTILITY BAR -->
+  <div class="weather-bar d-none d-md-block">
+    <div class="container d-flex justify-content-between align-items-center">
+      <span>
+        <i class="bi bi-cloud-sun me-1"></i> Cascavel, PR &nbsp;·&nbsp; 24 °C, Parcialmente Nublado
+      </span>
+      <span>
+        Sexta-feira, xx de Junho de 20xx
+        &nbsp;|&nbsp;
+        <a href="#" class="text-decoration-none text-secondary">Acesso &amp; Login</a>
+      </span>
+    </div>
+  </div>
+
+  <!--NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-neopolitan sticky-top" aria-label="Navegação principal">
+    <div class="container">
+
+      <!-- Logótipo -->
+      <a class="navbar-brand" href="#">
+        Neo<span>politan</span>
+      </a>
+
+      <!-- Botão hambúrguer -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+        aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links + pesquisa -->
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Início</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Política</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Economia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Mundo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Tecnologia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Cultura</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Random</a>
+          </li>
+        </ul>
+
+        <!-- Barra de pesquisa -->
+        <form class="d-flex gap-2" role="search" aria-label="Pesquisar notícias">
+          <input class="form-control form-control-sm bg-transparent text-white border-secondary" type="search"
+            placeholder="Pesquisar…" aria-label="Pesquisar" style="min-width:170px;" />
+          <button class="btn btn-sm btn-outline-light" type="submit" aria-label="Pesquisar">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+
+        <!-- Botão Newsletter (abre Modal) -->
+        <button class="btn btn-sm ms-3 fw-semibold" style="background:var(--brand-red);color:#fff;border:none;"
+          data-bs-toggle="modal" data-bs-target="#modalNewsletter">
+          <i class="bi bi-envelope-paper me-1"></i> Newsletter
+        </button>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- BREAKING NEWS BAR -->
+  <div class="breaking-bar">
+    <div class="container">
+      <span class="label">Urgente</span>
+      O frio da desgraça não para em Cascavel/PR &nbsp;·&nbsp;
+      Bolsa de Neanderlândia sobe 1,8% após dados dos empregos
+    </div>
+  </div>
+  
+
+  <!-- HERO SECTION -->
+  <section class="hero-section" aria-label="Notícia em destaque">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-7 col-md-9">
+          <span class="badge badge-category mb-3">Destaque</span>
+          <h1 class="mb-3">
+            Brasil anuncia plano bilionário para transição energética até 2030
+          </h1>
+          <p class="lead mb-4">
+            Líderes brasileiros chegaram a um acordo sobre o maior pacote de investimento em energias renováveis da história
+            do país, com R$ 850 bilhões comprometidos para a próxima década.
+          </p>
+          <div class="hero-meta mb-4">
+            <i class="bi bi-person-circle me-1"></i> Odilon Canhão &nbsp;·&nbsp;
+            <i class="bi bi-clock me-1"></i> Há 23 minutos &nbsp;·&nbsp;
+            <i class="bi bi-eye me-1"></i> 14 782 leituras
+          </div>
+          <a href="#" class="btn btn-hero me-2">
+            Ler artigo completo <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+          <a href="#" class="btn btn-sm btn-outline-light">
+            <i class="bi bi-share me-1"></i> Compartilhar
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORPO PRINCIPAL (Grid + Cards + Sidebar) -->
+  <main class="container my-5" id="conteudo-principal">
+    <div class="row g-4">
+
+      <!-- ── Coluna principal: Cards de notícias ── -->
+      <section class="col-lg-8" aria-label="Notícias recentes">
+
+        <h2 class="section-title">Últimas Notícias</h2>
+
+        <div class="row g-4">
+
+          <!-- Card 1 -->
+          <div class="col-md-6">
+            <article class="card news-card h-100">
+              <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&h=360&fit=crop" class="card-img-top"
+                alt="Imagem: plenário do Congresso Nacional" />
+              <div class="card-body">
+                <p class="card-category">Política</p>
+                <h3 class="card-title">Câmara aprova reforma da Previdência com votos da maioria</h3>
+                <p class="card-text">
+                  O pacote legislativo, que altera as regras de acesso à aposentadoria antecipada, foi aprovado com 666 votos
+                  a favor e 69 contra.
+                </p>
+              </div>
+              <div class="card-footer d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-clock me-1"></i> Há 1 h</span>
+                <a href="#" class="btn-read">Ler mais</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="col-md-6">
+            <article class="card news-card h-100">
+              <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=360&fit=crop" class="card-img-top"
+                alt="Imagem: gráfico de inflação e economia" />
+              <div class="card-body">
+                <p class="card-category">Economia</p>
+                <h3 class="card-title">Inflação cai para 2,1% em junho, menor índice dos últimos três anos</h3>
+                <p class="card-text">
+                  O IBGE divulgou esta manhã os dados do IPCA, que surpreendem analistas e os mercados financeiros.
+                </p>
+              </div>
+              <div class="card-footer d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-clock me-1"></i> Há 2 h</span>
+                <a href="#" class="btn-read">Ler mais</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="col-md-6">
+            <article class="card news-card h-100">
+              <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&h=360&fit=crop" class="card-img-top"
+                alt="Imagem: inteligência artificial e tecnologia" />
+              <div class="card-body">
+                <p class="card-category">Tecnologia</p>
+                <h3 class="card-title">Nova lei brasileira da internet entra em vigor: o que muda para usuários e
+                  empresas</h3>
+                <p class="card-text">
+                  Com o marco regulatório da IA plenamente operacional, veja o que muda para o uso da internet.
+                </p>
+              </div>
+              <div class="card-footer d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-clock me-1"></i> Há 3 h</span>
+                <a href="#" class="btn-read">Ler mais</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="col-md-6">
+            <article class="card news-card h-100">
+              <img src="https://picsum.photos/seed/mun04/600/360" class="card-img-top" alt="Imagem: ONU" />
+              <div class="card-body">
+                <p class="card-category">Mundo</p>
+                <h3 class="card-title">ONU pede nota A imediata para Neo</h3>
+                <p class="card-text">
+                  O Conselho de Segurança aprovou por unanimidade resolução exigindo a nota A para Neo Bianchin.
+                </p>
+              </div>
+              <div class="card-footer d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-clock me-1"></i> Há 4 h</span>
+                <a href="#" class="btn-read">Ler mais</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="col-md-6">
+            <article class="card news-card h-100">
+              <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&h=360&fit=crop" class="card-img-top"
+                alt="Imagem: festival de cinema" />
+              <div class="card-body">
+                <p class="card-category">Cultura</p>
+                <h3 class="card-title">Festival de Cinema de São Paulo bate recorde com 180 mil espectadores</h3>
+                <p class="card-text">
+                  A edição deste ano contou com filmes de 54 países e dois prêmios internacionais, consolidando São Paulo
+                  como capital latino-americana do cinema independente.
+                </p>
+              </div>
+              <div class="card-footer d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-clock me-1"></i> Há 5 h</span>
+                <a href="#" class="btn-read">Ler mais</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="col-md-6">
+            <article class="card news-card h-100">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=360&fit=crop" class="card-img-top"
+                alt="Imagem: aleatório" />
+              <div class="card-body">
+                <p class="card-category">Random</p>
+                <h3 class="card-title">Nada de novo por aqui</h3>
+                <p class="card-text">
+                  Sabe como é né.
+                </p>
+              </div>
+              <div class="card-footer d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-clock me-1"></i> Há 6 h</span>
+                <a href="#" class="btn-read">Ler mais</a>
+              </div>
+            </article>
+          </div>
+
+        </div><!-- /row cards -->
+
+        <!-- Paginação -->
+        <nav class="mt-4" aria-label="Navegação de páginas">
+          <ul class="pagination pagination-sm justify-content-center">
+            <li class="page-item disabled">
+              <span class="page-link">&laquo;</span>
+            </li>
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">1</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">&raquo;</a>
+            </li>
+          </ul>
+        </nav>
+
+      </section><!-- /col-lg-8 -->
+
+      <!-- ── Sidebar ── -->
+      <aside class="col-lg-4" aria-label="Barra lateral">
+
+        <!-- Widget: Mais Lidas -->
+        <div class="sidebar-widget">
+          <h2 class="section-title">Mais Lidas</h2>
+          <ul class="list-group list-group-flush">
+
+            <li class="list-group-item list-group-item-news">
+              <img src="https://picsum.photos/seed/ml01/120/90" alt="" />
+              <div>
+                <p class="item-title">Banco Central mantém taxa Selic e sinaliza corte para setembro</p>
+                <p class="item-time"><i class="bi bi-clock me-1"></i>Há 30 min</p>
+              </div>
+            </li>
+
+            <li class="list-group-item list-group-item-news">
+              <img src="https://picsum.photos/seed/ml02/120/90" alt="" />
+              <div>
+                <p class="item-title">Incêndio em Rolandia mobiliza 60 bombeiros.</p>
+                <p class="item-time"><i class="bi bi-clock me-1"></i>Há 1 h 15 min</p>
+              </div>
+            </li>
+
+            <li class="list-group-item list-group-item-news">
+              <img src="https://picsum.photos/seed/ml03/120/90" alt="" />
+              <div>
+                <p class="item-title">Estudo revela que consumo de ultra-processados aumentou 40% em jovens</p>
+                <p class="item-time"><i class="bi bi-clock me-1"></i>Há 2 h</p>
+              </div>
+            </li>
+
+            <li class="list-group-item list-group-item-news">
+              <img src="https://picsum.photos/seed/ml04/120/90" alt="" />
+              <div>
+                <p class="item-title">Governo anuncia construção de 12 mil habitações populares até 2027</p>
+                <p class="item-time"><i class="bi bi-clock me-1"></i>Há 3 h</p>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+        <!-- Widget: Assinar Newsletter (abre Modal) -->
+        <div class="sidebar-widget text-center">
+          <i class="bi bi-newspaper fs-2 mb-2" style="color:var(--brand-red);"></i>
+          <h2 class="section-title text-center border-0 mb-1">Receba as notícias</h2>
+          <p class="text-muted small mb-3">Resumo diário na sua caixa de entrada, sem spam.</p>
+          <button class="btn w-100 fw-semibold" style="background:var(--brand-red);color:#fff;" data-bs-toggle="modal"
+            data-bs-target="#modalNewsletter">
+            <i class="bi bi-envelope-paper me-2"></i>Assinar Newsletter
+          </button>
+        </div>
+
+        <!-- Widget: Tags -->
+        <div class="sidebar-widget">
+          <h2 class="section-title">Temas em Destaque</h2>
+          <a href="#" class="tag-badge">Clima</a>
+          <a href="#" class="tag-badge">Eleições</a>
+          <a href="#" class="tag-badge">IA</a>
+          <a href="#" class="tag-badge">Economia</a>
+          <a href="#" class="tag-badge">Saúde</a>
+          <a href="#" class="tag-badge">Random</a>
+          <a href="#" class="tag-badge">Habitação</a>
+          <a href="#" class="tag-badge">Energia</a>
+          <a href="#" class="tag-badge">Educação</a>
+          <a href="#" class="tag-badge">Cultura</a>
+          <a href="#" class="tag-badge">Ciência</a>
+        </div>
+
+      </aside><!-- /sidebar -->
+
+    </div><!-- /row principal -->
+  </main>
+
+  <!-- MODAL — NEWSLETTER -->
+  <div class="modal fade" id="modalNewsletter" tabindex="-1" aria-labelledby="tituloModalNewsletter" aria-modal="true"
+    role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="tituloModalNewsletter">
+            <i class="bi bi-envelope-paper me-2"></i>Assinar Newsletter Neopolitan
+          </h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+
+        <div class="modal-body p-4">
+          <p class="text-muted small mb-4">
+            Receba um resumo diário das notícias mais importantes direto no seu e-mail. Cancele quando quiser.
+          </p>
+
+          <!-- Formulário Bootstrap -->
+          <div class="mb-3">
+            <label for="nomeAssinante" class="form-label fw-semibold">Nome completo</label>
+            <input type="text" class="form-control" id="nomeAssinante" placeholder="Ex.: Maria Silva"
+              autocomplete="name" />
+          </div>
+
+          <div class="mb-3">
+            <label for="emailAssinante" class="form-label fw-semibold">Endereço de email</label>
+            <input type="email" class="form-control" id="emailAssinante" placeholder="Ex.: maria@email.com"
+              autocomplete="email" />
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Áreas de interesse</label>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="chkPolitica" checked />
+                  <label class="form-check-label" for="chkPolitica">Política</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="chkEconomia" />
+                  <label class="form-check-label" for="chkEconomia">Economia</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="chkMundo" />
+                  <label class="form-check-label" for="chkMundo">Mundo</label>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="chkTec" checked />
+                  <label class="form-check-label" for="chkTec">Tecnologia</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="chkCultura" />
+                  <label class="form-check-label" for="chkCultura">Cultura</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="chkRandom" />
+                  <label class="form-check-label" for="chkRandom">Random</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="btn w-100 fw-semibold py-2"
+            style="background:var(--brand-red);color:#fff;border:none;"
+            onclick="this.innerHTML='<i class=\'bi bi-check2-circle me-1\'></i> Assinado com sucesso!'; this.disabled=true;">
+            Assinar gratuitamente
+          </button>
+
+          <p class="text-center text-muted mt-3" style="font-size:0.72rem;">
+            Ao se inscrever, aceita a nossa
+            <a href="#" style="color:var(--brand-red);">Política de Privacidade</a>.
+            Sem spam, cancele a qualquer momento.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--FOOTER-->
+  <footer class="footer-dark bg-dark text-white pt-5 pb-3" aria-label="Rodapé">
+    <div class="container">
+      <div class="row g-4 mb-4">
+
+        <!-- Sobre -->
+        <div class="col-lg-4 col-md-6">
+          <p class="navbar-brand mb-2" style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;">
+            Neo<span style="color:var(--brand-red);">politan</span>
+          </p>
+          <p style="font-size:0.84rem;color:#94A3B8;line-height:1.65;">
+            Jornalismo independente, rigoroso e comprometido com a verdade desde 1998.
+            Notícias do Brasil e do mundo, 24 horas por dia.
+          </p>
+          <!-- Redes Sociais -->
+          <div class="footer-social mt-3">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter / X"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <!-- Secções -->
+        <div class="col-lg-2 col-md-3 col-6">
+          <h6>Seções</h6>
+          <a href="#">Política</a>
+          <a href="#">Economia</a>
+          <a href="#">Mundo</a>
+          <a href="#">Tecnologia</a>
+          <a href="#">Cultura</a>
+          <a href="#">Random</a>
+        </div>
+
+        <!-- Serviços -->
+        <div class="col-lg-2 col-md-3 col-6">
+          <h6>Serviços</h6>
+          <a href="#">Newsletter</a>
+          <a href="#">Podcast</a>
+          <a href="#">App Mobile</a>
+          <a href="#">RSS Feed</a>
+          <a href="#">Arquivo</a>
+        </div>
+
+        <!-- Empresa -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <h6>Empresa</h6>
+          <a href="#">Sobre nós</a>
+          <a href="#">Redação</a>
+          <a href="#">Publicidade</a>
+          <a href="#">Contato</a>
+          <a href="#">Carreiras</a>
+        </div>
+
+        <!-- Legal -->
+        <div class="col-lg-2 col-md-6 col-6">
+          <h6>Legal</h6>
+          <a href="#">Privacidade</a>
+          <a href="#">Termos de Uso</a>
+          <a href="#">Cookies</a>
+          <a href="#">Ouvidoria</a>
+        </div>
+
+      </div><!-- /row -->
+
+      <!-- Linha de fundo -->
+      <div class="footer-bottom text-center p-4">
+        <p class="mb-0">
+          &copy; 2026 Neopolitan — Portal de Notícias. Todos os direitos reservados.
+          &nbsp;|&nbsp;
+          Desenvolvido com <i class="bi bi-heart-fill" style="color:var(--brand-red);"></i> por Neuraldo Bianchin
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
